@@ -261,6 +261,17 @@ UpgradeLog*.htm
 ServiceFabricBackup/
 *.rptproj.bak
 
+# virtual envirnoment
+venv/
+.venv/
+
+# environment file
+*.env
+*.env.*
+!.env.example
+.python-version
+connections.*.json
+
 # SQL Server files
 *.mdf
 *.ldf
