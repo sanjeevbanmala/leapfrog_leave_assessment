@@ -1,0 +1,15 @@
+{
+  "steps": [
+    { "proc": "dbo.extract_leave_types" },
+    { "proc": "dbo.fiscal_year" },
+    { "proc": "dbo.leave_issuer" },
+    { "proc": "dbo.designations" },
+    { "proc": "dbo.departments" },
+    { "proc": "dbo.team_managers" },
+    { "proc": "dbo.employees" },
+    { "proc": "dbo.employee_leave_issuer" },
+    { "proc": "dbo.employee_leaves" },
+    { "proc": "dbo.allocations" },
+    { "proc": "dbo.employee_allocations" }
+  ]
+}
