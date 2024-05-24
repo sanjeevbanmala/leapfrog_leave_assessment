@@ -1,0 +1,106 @@
+[sqlfluff]
+verbose = 0
+# The SQL dialect to use 
+# Supported dialects https://docs.sqlfluff.com/en/stable/dialects.html
+# Or run 'sqlfluff dialects'
+dialect = postgres  
+# One of [raw|jinja|python|placeholder]
+templater = jinja
+# The file extensions to lint
+sql_file_exts = .sql
+# The maximum line length for the SQL code
+max_line_length = 100
+# The byte limit for skipping large files (0 to disable)
+large_file_skip_byte_limit = 0
+
+
+[sqlfluff:indentation]
+# See https://docs.sqlfluff.com/en/stable/layout.html#configuring-indent-locations
+indent_unit = space
+# The number of spaces to use for indentation
+tab_space_size = 2
+# Whether to indent JOIN clauses
+indented_joins = True
+# Whether to indent CTEs in JOIN clauses
+multiline_join_cte_indented = True
+# Whether to indent CTEs in MERGE clauses
+multiline_merge_cte_indented = True
+# Whether to indent JOINs in MERGE clauses
+multiline_join_in_merge_indented = True
+
+
+[sqlfluff:rules]
+single_table_references = consistent
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.types]
+extended_capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.functions]
+extended_capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.literals]
+capitalisation_policy = upper
+
+
+# Layout configuration
+# See https://docs.sqlfluff.com/en/stable/layout.html#configuring-layout-and-spacing
+[sqlfluff:layout:type:comma]
+line_position = trailing
+
+# By setting a selection of clauses to "alone", we hint to the reflow
+# algorithm that in the case of a long single line statement, the
+# first place to add newlines would be around these clauses.
+# Setting this to "alone:strict" would always _force_ line breaks
+# around them even if the line isn't too long.
+[sqlfluff:layout:type:select_clause]
+line_position = alone
+
+[sqlfluff:layout:type:where_clause]
+line_position = alone
+
+[sqlfluff:layout:type:from_clause]
+line_position = alone
+
+[sqlfluff:layout:type:join_clause]
+line_position = alone
+
+[sqlfluff:layout:type:groupby_clause]
+line_position = alone
+
+[sqlfluff:layout:type:orderby_clause]
+# NOTE: Order by clauses appear in many places other than in a select
+# clause. To avoid unexpected behaviour we use `leading` in this
+# case rather than `alone`.
+line_position = leading
+
+[sqlfluff:layout:type:having_clause]
+line_position = alone
+
+[sqlfluff:layout:type:limit_clause]
+line_position = alone
+
+
+[sqlfluff:templater]
+# The position of the VALUES keyword in INSERT statements
+line_position_insert_values = Hanging
+# The way to split the query into chunks
+query_chunk = Newline
+
+[sqlfluff:templater:tsql:add_merge_using_same_line]
+# Determines the position of the MERGE keyword. NEW_LINE means it should start on a new line.
+merge = NEW_LINE
+# Determines the position of the USING keyword in a MERGE statement. SAME_LINE means it should be on the same line as the previous keyword.
+merge_using = SAME_LINE
+
+[sqlfluff:templater:tsql:add_from_table_same_line]
+# Determines the position of the FROM keyword. SAME_LINE means it should be on the same line as the previous keyword.
+from = SAME_LINE
+
+[sqlfluff:templater:tsql:select_column_newline]
+# Determines the position of trailing SELECT keyword. NEW_LINE means it should start on a new line.
+select_select_trail = NEW_LINE
+# Determines the position of untrailing SELECT keyword. NEW_LINE means it should start on a new line.
+select_select_untrail = NEW_LINE
