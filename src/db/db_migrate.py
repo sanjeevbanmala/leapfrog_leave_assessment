@@ -2,11 +2,11 @@ import os
 import argparse
 import sys
 
-from database import databaseConnect, databaseDisconnect
+from database import connect_db, close_db
 
 def migration_down():
     schemas = ["raw", "dbo"]
-    conn = databaseConnect()
+    conn = connect_db()
     cur = conn.cursor()
     for schema in schemas:
         cur.execute(
@@ -16,11 +16,11 @@ def migration_down():
         )
     print("[+] VyagutaInfo Database cleaned!\n")
     conn.commit()
-    databaseDisconnect(conn, cur)
+    close_db(conn, cur)
 
 
 def migration_up():
-    conn = databaseConnect()
+    conn = connect_db()
     cur = conn.cursor()
     directories = ["./sql/migrations", "./sql/procedures"]
     for directory in directories:
@@ -35,7 +35,7 @@ def migration_up():
                     except Exception as e:
                         conn.rollback()
                         print(f"[-] Failed to execute {filename}: ", e)
-    databaseDisconnect(conn, cur)
+    close_db(conn, cur)
 
 
 if __name__ == "__main__":

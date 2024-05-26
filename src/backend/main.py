@@ -8,7 +8,7 @@ from flask import Flask, jsonify, request
 from util.constants import URL, DEFAULT_BEARER_TOKEN
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from db.database import databaseConnect, databaseDisconnect
+from db.database import connect_db, close_db
 
 
 app = Flask(__name__)
@@ -43,7 +43,7 @@ def leave_info():
 @app.route("/insert_leave_info", methods=["GET"])
 def insert_data():
     try:
-        conn = databaseConnect()
+        conn = connect_db()
         cur = conn.cursor()
 
         json_data = get_leave_info()
@@ -87,12 +87,12 @@ def insert_data():
             cur.execute(f'CALL {step["proc"]}();')
             conn.commit()
 
-        databaseDisconnect(conn, cur)
+        close_db(conn, cur)
         return jsonify({"success": "Leave Data Inserted Successfully!"})
 
     except Exception as e:
         conn.rollback()
-        databaseDisconnect(conn, cur)
+        close_db(conn, cur)
         return jsonify({"error": f"Couldn't insert the leave data!{e}"})
 
 

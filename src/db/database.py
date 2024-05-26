@@ -11,7 +11,7 @@ USERNAME = os.getenv("USERNAME", "sa")
 PASSWORD = os.getenv("PASSWORD")
 
 
-def databaseConnect():
+def connect_db():
     try:
         connection = psycopg2.connect(
             user=USERNAME,
@@ -25,7 +25,7 @@ def databaseConnect():
         print(f"[-] Exception Occured: ", e)
 
 
-def databaseDisconnect(connection, cursor):
+def close_db(connection, cursor):
     """
     This function helps to disconnect from database.
     """
