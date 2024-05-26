@@ -22,7 +22,7 @@ jobs:
           python-version: 3.8
 
       - name: Install dependencies
-        run: pip install black
+        run: pip install black pytest
 
       - name: Run linting
         run: |
@@ -31,3 +31,5 @@ jobs:
       - name: Run formatting
         run: black .
 
+      - name: Run pytest
+        run: pytest
