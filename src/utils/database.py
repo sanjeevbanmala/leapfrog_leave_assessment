@@ -2,6 +2,8 @@ import os
 import psycopg2
 
 from dotenv import load_dotenv
+from utils.logging import get_logger
+logger=get_logger()
 
 load_dotenv()
 
@@ -22,7 +24,7 @@ def connect_db():
         )
         return connection
     except Exception as e:
-        print(f"[-] Exception Occured: ", e)
+        logger.error(f"[-] Exception Occured: ", e)
 
 
 def close_db(connection, cursor):
@@ -33,4 +35,4 @@ def close_db(connection, cursor):
         cursor.close()
         connection.close()
     except Exception as e:
-        print(f"[-] Exception Occured: ", e)
+        logger.error(f"[-] Exception Occured: ", e)

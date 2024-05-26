@@ -1,11 +1,14 @@
+import sys
+import os
 import streamlit as st
 import plotly.graph_objects as go
-import logging
-from viz_utils import fetch_data
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from utils.fetch_data import fetch_data
+from utils.logging import get_logger
+
+logger = get_logger("Periodic-trends")
 
 def main():
-    # Configure logging
-    logging.basicConfig(filename='streamlit.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     st.set_page_config(page_title="Leave Periodic Trends", page_icon="🌍")
 
@@ -13,10 +16,10 @@ def main():
     try:
         all_data = fetch_data("./sql/employee_all_leave_data.sql")
         st.sidebar.success("Data fetched successfully.")
-        logging.info("Data fetched successfully.")
+        logger.info("Data fetched successfully.")
     except Exception as e:
         st.sidebar.error(f"Error fetching data: {e}")
-        logging.error(f"Error fetching data: {e}")
+        logger.error(f"Error fetching data: {e}")
         all_data = None
 
     if all_data is not None:
@@ -114,7 +117,7 @@ def main():
 
         # Show the plot
         st.plotly_chart(weekly_fig)
-        logging.info("Streamlit app executed successfully.")
+        logger.info("Streamlit app executed successfully.")
 
 if __name__ == "__main__":
     main()

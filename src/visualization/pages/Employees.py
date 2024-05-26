@@ -1,13 +1,13 @@
-import logging
+import sys
+import os
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-from viz_utils import fetch_data
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from utils.fetch_data import fetch_data
+from utils.logging import get_logger
 
-# Configure logging
-logging.basicConfig(filename='streamlit.log', level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
-
+logger = get_logger("Employees")
 
 def main():
 
@@ -17,7 +17,7 @@ def main():
     leave_data = fetch_data("./sql/leave_balance.sql")
 
     if data is None or alloc_data is None or leave_data is None:
-        logging.error("Failed to fetch data. Please check the logs for details.")
+        logger.error("Failed to fetch data. Please check the logs for details.")
         return
 
     st.subheader("Employee Details")
@@ -34,7 +34,7 @@ def main():
     selected_associated_variable = result_dict.get(selected_display_value)
 
     if selected_associated_variable is None:
-        logging.error("Failed to retrieve selected employee details.")
+        logger.error("Failed to retrieve selected employee details.")
         return
 
     emp_details = data.query("employee_id == @selected_associated_variable")
@@ -77,7 +77,7 @@ def main():
         # Show the chart in the appropriate column and row
         columns[figure_counter // num_columns][figure_counter % num_columns].plotly_chart(fig, use_container_width=True, height=100)
         figure_counter += 1
-    logging.info("Streamlit app executed successfully.")
+    logger.info("Streamlit app executed successfully.")
 
 
 if __name__ == "__main__":

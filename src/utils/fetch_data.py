@@ -1,9 +1,9 @@
 import sys
 import os
-import logging
 import pandas as pd
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from db.database import connect_db
+from utils.database import connect_db
+from utils.logging import get_logger
+logger = get_logger()
 
 def fetch_data(sql_file):
     try:
@@ -16,8 +16,8 @@ def fetch_data(sql_file):
         all_data = pd.read_sql(sql_queries, conn)
         conn.close()
         
-        logging.info('Data fetched successfully')
+        logger.info('Data fetched successfully')
         return all_data
     except Exception as e:
-        logging.error(f"Error fetching data: {e}")
+        logger.error(f"Error fetching data: {e}")
         return None

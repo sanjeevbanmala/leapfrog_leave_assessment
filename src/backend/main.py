@@ -8,7 +8,9 @@ from flask import Flask, jsonify, request
 from util.constants import URL, DEFAULT_BEARER_TOKEN
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from db.database import connect_db, close_db
+from utils.database import connect_db, close_db
+from utils.logging import get_logger
+logger=get_logger()
 
 
 app = Flask(__name__)
@@ -18,8 +20,10 @@ def get_leave_info(bearer_token=DEFAULT_BEARER_TOKEN):
     headers = {"Authorization": f"Bearer {bearer_token}"}
     response = requests.get(URL, headers=headers)
     if response.status_code == 200:
+        logger.info("Leave information successfully retrieved")
         return response.json()
     else:
+        logger.error("Failed to retrieve leave information. Status code: %d", response.status_code)
         return jsonify({"error": "Unauthorized"}), 401
 
 
@@ -89,11 +93,13 @@ def insert_data():
 
         close_db(conn, cur)
         return jsonify({"success": "Leave Data Inserted Successfully!"})
+        logger.info("Leave Data Inserted Successfully!")
 
     except Exception as e:
         conn.rollback()
         close_db(conn, cur)
         return jsonify({"error": f"Couldn't insert the leave data!{e}"})
+        logger.error("error": f"Couldn't insert the leave data!{e}")
 
 
 if __name__ == "__main__":

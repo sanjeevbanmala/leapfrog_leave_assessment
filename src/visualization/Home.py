@@ -1,12 +1,12 @@
-import logging
+import sys
+import os
 import streamlit as st
-import pandas as pd
 import plotly.express as px
-from viz_utils import fetch_data
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from utils.fetch_data import fetch_data
+from utils.logging import get_logger
 
-# Configure logging
-logging.basicConfig(filename='streamlit.log', level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+logger = get_logger("Dashboard-Home")
 
 
 def generate_visualizations(all_data):
@@ -43,10 +43,10 @@ def generate_visualizations(all_data):
                                             color_discrete_sequence=["#0083B8"] * len(designation_wise_leave),
                                             template="plotly_white")
 
-        logging.info('Visualizations generated successfully')
+        logger.info('Visualizations generated successfully')
         return fig_monthly_sales, fig_dept_wise_leave, fig_leave_type_wise_leave, fig_designation_wise_leave
     except Exception as e:
-        logging.error(f"Error generating visualizations: {e}")
+        logger.error(f"Error generating visualizations: {e}")
         return None, None, None, None
 
 def main():
@@ -69,9 +69,9 @@ def main():
             third.plotly_chart(fig_leave_type_wise_leave, use_container_width=True)
             fourth.plotly_chart(fig_designation_wise_leave, use_container_width=True)
 
-            logging.info('Visualizations displayed successfully')
+            logger.info('Visualizations displayed successfully')
         else:
-            st.error("An error occurred while generating visualizations. Please check the logs for details.")
+            logger.error("An error occurred while generating visualizations. Please check the logs for details.")
 
 # Run the app
 if __name__ == "__main__":

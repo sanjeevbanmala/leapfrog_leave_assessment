@@ -1,8 +1,10 @@
 import os
 import argparse
 import sys
-
-from database import connect_db, close_db
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from utils.database import connect_db, close_db
+from utils.logging import get_logger
+logger=get_logger()
 
 def migration_down():
     schemas = ["raw", "dbo"]
@@ -14,7 +16,7 @@ def migration_down():
         DROP SCHEMA IF EXISTS {schema} CASCADE;
         """
         )
-    print("[+] VyagutaInfo Database cleaned!\n")
+    logger.info("[+] VyagutaInfo Database cleaned!\n")
     conn.commit()
     close_db(conn, cur)
 
@@ -31,10 +33,10 @@ def migration_up():
                     try:
                         cur.execute(sql_command)
                         conn.commit()
-                        print(f"[+] Executed {filename}\n")
+                        logger.info(f"[+] Executed {filename}\n")
                     except Exception as e:
                         conn.rollback()
-                        print(f"[-] Failed to execute {filename}: ", e)
+                        logger.error(f"[-] Failed to execute {filename}: ", e)
     close_db(conn, cur)
 
 
