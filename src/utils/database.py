@@ -3,7 +3,8 @@ import psycopg2
 
 from dotenv import load_dotenv
 from utils.logging import get_logger
-logger=get_logger()
+
+logger = get_logger()
 
 load_dotenv()
 

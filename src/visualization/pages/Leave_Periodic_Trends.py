@@ -2,11 +2,13 @@ import sys
 import os
 import streamlit as st
 import plotly.graph_objects as go
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils.fetch_data import fetch_data
 from utils.logging import get_logger
 
 logger = get_logger("Periodic-trends")
+
 
 def main():
 
@@ -34,12 +36,16 @@ def main():
         # Calculate total leave days and leave days for each month
         monthly_leave_data = grp_by_month.agg(
             Total_Leave_Days=("leave_days", "sum"),
-            Leave_Days_Type=("leave_days", lambda x: x[all_data["leave_type"] == leave_type].sum()),
+            Leave_Days_Type=(
+                "leave_days",
+                lambda x: x[all_data["leave_type"] == leave_type].sum(),
+            ),
         )
 
         # Calculate percentage of leave days for each month
         monthly_leave_data["Percentage_Leave_Type"] = (
-            monthly_leave_data["Leave_Days_Type"] / monthly_leave_data["Total_Leave_Days"]
+            monthly_leave_data["Leave_Days_Type"]
+            / monthly_leave_data["Total_Leave_Days"]
         ) * 100
 
         # Select month, year, and leave percentage
@@ -48,9 +54,13 @@ def main():
         ]
 
         # Pivot the data to create a matrix suitable for heatmap
-        monthly_leave_heatmap_data = index_monthly_leave_data.pivot(
-            index="hmonth", columns="year", values="Percentage_Leave_Type"
-        ).fillna(0).round(2)
+        monthly_leave_heatmap_data = (
+            index_monthly_leave_data.pivot(
+                index="hmonth", columns="year", values="Percentage_Leave_Type"
+            )
+            .fillna(0)
+            .round(2)
+        )
 
         # Create heatmap
         monthly_fig = go.Figure(
@@ -79,7 +89,10 @@ def main():
         # Calculate total leave days and leave days for each week
         weekly_leave_data = grp_by_week.agg(
             Total_Leave_Days=("leave_days", "sum"),
-            Leave_Days_Type=("leave_days", lambda x: x[all_data["leave_type"] == leave_type].sum()),
+            Leave_Days_Type=(
+                "leave_days",
+                lambda x: x[all_data["leave_type"] == leave_type].sum(),
+            ),
         )
 
         # Calculate percentage of leave days for each week
@@ -93,9 +106,13 @@ def main():
         ]
 
         # Pivot the data to create a matrix suitable for heatmap
-        weekly_leave_data_heatmap = index_weekly_leave_data.pivot(
-            index="day", columns="year", values="Percentage_Leave_Type"
-        ).fillna(0).round(2)
+        weekly_leave_data_heatmap = (
+            index_weekly_leave_data.pivot(
+                index="day", columns="year", values="Percentage_Leave_Type"
+            )
+            .fillna(0)
+            .round(2)
+        )
 
         # Create heatmap
         weekly_fig = go.Figure(
@@ -118,6 +135,7 @@ def main():
         # Show the plot
         st.plotly_chart(weekly_fig)
         logger.info("Streamlit app executed successfully.")
+
 
 if __name__ == "__main__":
     main()

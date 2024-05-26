@@ -1,10 +1,13 @@
 import os
 import argparse
 import sys
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils.database import connect_db, close_db
 from utils.logging import get_logger
-logger=get_logger()
+
+logger = get_logger()
+
 
 def migration_down():
     schemas = ["raw", "dbo"]

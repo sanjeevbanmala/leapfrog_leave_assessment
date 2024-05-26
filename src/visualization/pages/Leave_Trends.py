@@ -2,11 +2,13 @@ import sys
 import os
 import streamlit as st
 import plotly.graph_objects as go
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils.fetch_data import fetch_data
 from utils.logging import get_logger
 
 logger = get_logger("Leave-trends")
+
 
 def main():
 
@@ -54,7 +56,11 @@ def main():
 
         ####################### Month and Day wise Leave Trend################################
 
-        monthly_leaves_columns = df_selection.groupby(by=["month_number", "month"])["leave_days"].sum().reset_index()
+        monthly_leaves_columns = (
+            df_selection.groupby(by=["month_number", "month"])["leave_days"]
+            .sum()
+            .reset_index()
+        )
 
         # Leaves BY Month [BAR CHART]
         fig_monthly_sales = px.line(
@@ -72,7 +78,11 @@ def main():
         )
 
         ###################### EMPLOYEE WISE LEAVE TREND ############################
-        employee_leave_columns = df_selection.groupby(by=["employee_first_name"])["leave_days"].sum().reset_index()
+        employee_leave_columns = (
+            df_selection.groupby(by=["employee_first_name"])["leave_days"]
+            .sum()
+            .reset_index()
+        )
 
         # Leaves BY Month [BAR CHART]
         fig_employee_leaves = px.bar(
@@ -92,6 +102,7 @@ def main():
         st.plotly_chart(fig_monthly_sales, use_container_width=True)
         st.plotly_chart(fig_employee_leaves, use_container_width=True)
         logger.info("Streamlit app executed successfully.")
+
 
 if __name__ == "__main__":
     main()
