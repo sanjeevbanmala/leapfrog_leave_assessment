@@ -1,4 +1,4 @@
-CREATE TABLE dbo.employee_allocations (
+CREATE TABLE IF NOT EXISTS dbo.employee_allocations (
   employee_id INT,
   allocation_id INT,
   CONSTRAINT pk_empid_allocation_id PRIMARY KEY (

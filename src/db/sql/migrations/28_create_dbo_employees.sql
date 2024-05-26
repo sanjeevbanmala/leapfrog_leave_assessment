@@ -1,4 +1,4 @@
-CREATE TABLE dbo.employees (
+CREATE TABLE IF NOT EXISTS dbo.employees (
   employee_id INT PRIMARY KEY,
   first_name VARCHAR(100),
   middle_name VARCHAR(100),

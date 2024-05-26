@@ -1,4 +1,4 @@
-CREATE TABLE dbo.employee_leaves (
+CREATE TABLE IF NOT EXISTS dbo.employee_leaves (
   leave_id INT PRIMARY KEY,
   leave_issuer_id INT,
   leave_type_id INT,

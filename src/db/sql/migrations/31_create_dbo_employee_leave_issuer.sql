@@ -1,4 +1,4 @@
-CREATE TABLE dbo.employee_leave_issuer (
+CREATE TABLE IF NOT EXISTS dbo.employee_leave_issuer (
   employee_id INT,
   leave_issuer_id INT,
   is_current_leave_issuer BOOLEAN,

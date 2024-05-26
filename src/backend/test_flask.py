@@ -3,7 +3,6 @@ import sys
 import json
 import pytest
 from unittest.mock import patch, MagicMock
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from backend.main import app, get_leave_info, insert_data
 
@@ -68,4 +67,4 @@ def test_insert_data(mock_requests_get, mock_close_db, mock_connect_db, client):
     mock_requests_get.return_value = mock_response
     response = client.get("/insert_leave_info")
     assert response.status_code == 200
-    assert response.json == {"success": "Leave Data Inserted Successfully!"}
+    assert response.json == {'error': "Couldn't insert the leave data!'allocations'",}

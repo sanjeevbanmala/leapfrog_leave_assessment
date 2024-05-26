@@ -1,4 +1,4 @@
-CREATE TABLE raw.imported_leave_information (
+CREATE TABLE IF NOT EXISTS raw.imported_leave_information (
   id VARCHAR(500),
   userid VARCHAR(500),
   empid VARCHAR(500),
