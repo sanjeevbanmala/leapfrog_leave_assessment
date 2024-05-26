@@ -4,7 +4,6 @@ import json
 import requests
 
 from flask import Flask, jsonify, request
-
 from util.constants import URL, DEFAULT_BEARER_TOKEN
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -107,4 +106,4 @@ def insert_data():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

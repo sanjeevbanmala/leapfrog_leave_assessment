@@ -20,6 +20,7 @@ def migration_down():
         """
         )
     logger.info("[+] VyagutaInfo Database cleaned!\n")
+    print("[+] VyagutaInfo Database cleaned!\n")
     conn.commit()
     close_db(conn, cur)
 
@@ -37,6 +38,7 @@ def migration_up():
                         cur.execute(sql_command)
                         conn.commit()
                         logger.info(f"[+] Executed {filename}\n")
+                        print(f"[+] Executed {filename}\n")
                     except Exception as e:
                         conn.rollback()
                         logger.error(f"[-] Failed to execute {filename}: ", e)
