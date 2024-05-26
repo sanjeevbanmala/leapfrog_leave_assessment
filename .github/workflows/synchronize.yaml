@@ -32,7 +32,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run database migrations
-      run: python db_migrate.py --up
+      run: python src/db/db_migrate.py --up
       env:
         DB_HOST: ${{ secrets.DB_HOST }}
         DB_USER: ${{ secrets.DB_USER }}
