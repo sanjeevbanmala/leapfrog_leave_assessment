@@ -4,12 +4,12 @@ import json
 import requests
 
 from flask import Flask, jsonify, request
+from util.constants import URL, DEFAULT_BEARER_TOKEN
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from backend.util.constants import URL, DEFAULT_BEARER_TOKEN
 from utils.database import connect_db, close_db
 from utils.logging import get_logger
-
+/home/ubuntu/leapfrog_leave_assessment/src
 logger = get_logger()
 
 
@@ -86,7 +86,7 @@ def insert_data():
             conn.commit()
 
         # run procedures
-        with open("../database/procedures.json") as f:
+        with open("../db/procedures.json") as f:
             proc_steps = json.load(f)
 
         # call each procedure in order

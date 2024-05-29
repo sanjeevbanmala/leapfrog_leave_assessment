@@ -7,6 +7,8 @@ import plotly.graph_objects as go
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils.fetch_data import fetch_data
 from utils.logging import get_logger
+from visualization.Home import reload
+
 
 logger = get_logger("Employees")
 
@@ -104,3 +106,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    reload()

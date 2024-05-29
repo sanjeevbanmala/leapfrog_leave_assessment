@@ -1,4 +1,5 @@
 import os
+import asyncpg
 import psycopg2
 
 from dotenv import load_dotenv
@@ -14,7 +15,21 @@ USERNAME = os.getenv("USERNAME", "sa")
 PASSWORD = os.getenv("PASSWORD")
 
 
-def connect_db():
+async def connect_db():
+    try:
+        connection = await asyncpg.connect(
+            user=USERNAME,
+            password=PASSWORD,
+            host=SERVER,
+            port=5432,
+            database=DATABASE,
+        )
+        return connection
+    except Exception as e:
+        logger.error(f"[-] Exception Occured: ", e)
+
+
+def sync_connect_db():
     try:
         connection = psycopg2.connect(
             user=USERNAME,

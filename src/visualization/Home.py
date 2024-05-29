@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 import streamlit as st
 import plotly.express as px
 
@@ -8,6 +9,13 @@ from utils.fetch_data import fetch_data
 from utils.logging import get_logger
 
 logger = get_logger("Dashboard-Home")
+
+
+# Function to reload the app
+def reload():
+    while True:
+        time.sleep(30)
+        st.rerun()
 
 
 def generate_visualizations(all_data):
@@ -129,6 +137,7 @@ def main():
 # Run the app
 if __name__ == "__main__":
     main()
+    reload()
 
 # ---- HIDE STREAMLIT STYLE ----
 hide_st_style = """
