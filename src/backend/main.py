@@ -7,12 +7,13 @@ import asyncpg
 import asyncio
 
 from fastapi import FastAPI, HTTPException, Header
-from util.constants import URL, DEFAULT_BEARER_TOKEN
+
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils.database import connect_db, close_db
 from utils.logging import get_logger
-from util.sql_queries import insert_query
+from backend.util.sql_queries import insert_query
+from backend.util.constants import URL, DEFAULT_BEARER_TOKEN
 
 logger = get_logger()
 
@@ -114,5 +115,6 @@ async def insert_data():
 
 
 if __name__ == "__main__":
+    import uvicorn
 
     uvicorn.run(app, host="127.0.0.1", port=8000, debug=True)
