@@ -1,9 +1,14 @@
 black
-flask 
+fastapi 
 plotly
-psycopg2
+psycopg2-binary
 requests
 sqlfluff
 streamlit
 matplotlib
 python-dotenv
+uvicorn
+httpx
+asyncpg
+asyncio
+argparse
