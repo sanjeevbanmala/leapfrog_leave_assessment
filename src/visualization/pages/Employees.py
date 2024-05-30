@@ -56,7 +56,7 @@ def main():
         )
     )
 
-    st.subheader("Used Leave vs Balance")
+    st.subheader("Leave Balance")
 
     fiscal_id = st.selectbox(
         "Select the Fiscal Date:", options=leave_data["fiscal_date"].unique()

@@ -3,7 +3,7 @@ import sys
 from locust import HttpUser, task, between
 
 
-# Import the Flask app
+# Import the Fasst api app
 from main import app
 
 
